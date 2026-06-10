@@ -50,5 +50,19 @@ namespace api.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { id = comment.Id }, comment);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var comment = _context.Comments.FirstOrDefault(c => c.Id == id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            _context.Comments.Remove(comment);
+            _context.SaveChanges();
+            return NoContent();
+        }
     }
 }
