@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Stock;
 using api.Mapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers
 {
@@ -20,15 +21,16 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetALL()
+        public async Task<IActionResult> GetALL()
         {
-            var stocks = _context.Stocks.Select(s => s.ToStockDTO()).ToList();
+            var stocks = await _context.Stocks.ToListAsync();
+            var stockDTOs = stocks.Select(s => s.ToStockDTO());
             return Ok(stocks);
         } 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var stock = _context.Stocks.FirstOrDefault(s => s.Id == id);
+            var stock = await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
             if (stock == null)
             {
                 return NotFound();
@@ -37,25 +39,25 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateStockRequestDTO createStockRequestDTO)
+        public async Task<IActionResult> Create([FromBody] CreateStockRequestDTO createStockRequestDTO)
         {
             var stock = createStockRequestDTO.ToStockFromCreateDTO();
             _context.Stocks.Add(stock);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = stock.Id }, stock);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var stock = _context.Stocks.FirstOrDefault(s => s.Id == id);
+            var stock = await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
             if (stock == null)
             {
                 return NotFound();
             }
             _context.Stocks.Remove(stock);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return NoContent();
         }
     }

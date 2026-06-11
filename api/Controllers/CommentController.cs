@@ -7,6 +7,7 @@ using api.Data;
 using api.Dtos.Comment;
 using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace api.Controllers
@@ -25,16 +26,17 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll ()
+        public async Task<IActionResult> GetAll ()
         {
-            var comments = _context.Comments.ToList();
+            var comments = await _context.Comments.ToListAsync();
+            var commentDTOs = comments.Select(c => c.ToCommentDTO());
             return Ok(comments);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var comment = _context.Comments.Find(id);
+            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
             if (comment == null)
             {
                 return NotFound();
@@ -43,19 +45,19 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateCommentRequestDTO createCommentRequestDTO)
+        public async Task<IActionResult>     Create([FromBody] CreateCommentRequestDTO createCommentRequestDTO)
         {
             var comment = createCommentRequestDTO.ToCommentFromCreateDTO();
             _context.Comments.Add(comment);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = comment.Id }, comment);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var comment = _context.Comments.FirstOrDefault(c => c.Id == id);
+            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
             if (comment == null)
             {
                 return NotFound();
