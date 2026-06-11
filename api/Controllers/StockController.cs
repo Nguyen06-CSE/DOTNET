@@ -7,6 +7,7 @@ using api.Dtos.Stock;
 using api.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using api.Interface;
 namespace api.Controllers
 {
     [Route("api/[controller]")]
@@ -15,22 +16,24 @@ namespace api.Controllers
     public class StockController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public StockController(ApplicationDBContext context )
+        private readonly IStocksRepository _stocksRepository;
+        public StockController(ApplicationDBContext context, IStocksRepository stocksRepository)
         {
             _context = context;
+            _stocksRepository = stocksRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetALL()
         {
-            var stocks = await _context.Stocks.ToListAsync();
+            var stocks = await _stocksRepository.GetAllStocks();
             var stockDTOs = stocks.Select(s => s.ToStockDTO());
             return Ok(stocks);
         } 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var stock = await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
+            var stock = await _stocksRepository.GetStockById(id);
             if (stock == null)
             {
                 return NotFound();
@@ -42,22 +45,20 @@ namespace api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateStockRequestDTO createStockRequestDTO)
         {
             var stock = createStockRequestDTO.ToStockFromCreateDTO();
-            _context.Stocks.Add(stock);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = stock.Id }, stock);
+            var createdStock = await _stocksRepository.AddStock(stock);
+            return CreatedAtAction(nameof(GetById), new { id = createdStock.Id }, createdStock);
         }
 
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var stock = await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
+            var stock = await _stocksRepository.DeleteStock(id);
             if (stock == null)
             {
                 return NotFound();
             }
-            _context.Stocks.Remove(stock);
-            await _context.SaveChangesAsync();
+            
             return NoContent();
         }
     }

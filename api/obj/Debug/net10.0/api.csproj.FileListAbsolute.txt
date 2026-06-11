@@ -159,3 +159,4 @@
 /Users/caotiendattx/Developer/dotnet/api/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll
 /Users/caotiendattx/Developer/dotnet/api/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/caotiendattx/Developer/dotnet/api/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/caotiendattx/Developer/dotnet/api/obj/Debug/net10.0/api.sourcelink.json

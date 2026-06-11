@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Comment;
+using api.Interface;
 using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,17 +19,19 @@ namespace api.Controllers
     {
         private readonly ILogger<CommentController> _logger;
         private readonly ApplicationDBContext _context;
+        private readonly ICommentsRepository _commentsRepository;
 
-        public CommentController(ILogger<CommentController> logger, ApplicationDBContext context)
+        public CommentController(ILogger<CommentController> logger, ApplicationDBContext context, ICommentsRepository commentsRepository)
         {
             _logger = logger;
             _context = context;
+            _commentsRepository = commentsRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll ()
         {
-            var comments = await _context.Comments.ToListAsync();
+            var comments = await _commentsRepository.GetAllComments();
             var commentDTOs = comments.Select(c => c.ToCommentDTO());
             return Ok(comments);
         }
@@ -36,7 +39,7 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            var comment = await _commentsRepository.GetCommentById(id);
             if (comment == null)
             {
                 return NotFound();
@@ -48,8 +51,7 @@ namespace api.Controllers
         public async Task<IActionResult>     Create([FromBody] CreateCommentRequestDTO createCommentRequestDTO)
         {
             var comment = createCommentRequestDTO.ToCommentFromCreateDTO();
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+            await _commentsRepository.AddComment(comment);
             return CreatedAtAction(nameof(GetById), new { id = comment.Id }, comment);
         }
 
@@ -57,13 +59,11 @@ namespace api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            var comment = await _commentsRepository.DeleteComment(id);
             if (comment == null)
             {
                 return NotFound();
             }
-            _context.Comments.Remove(comment);
-            _context.SaveChanges();
             return NoContent();
         }
     }
