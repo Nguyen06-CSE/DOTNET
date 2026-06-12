@@ -19,7 +19,8 @@ namespace api.Mapper
                     Purchase = stockModel.Purchase,
                     LastDiv = stockModel.LastDiv,
                     Industry = stockModel.Industry,
-                    MarketCap = stockModel.MarketCap
+                    MarketCap = stockModel.MarketCap,
+                    Comments = stockModel.Comments.Select(c => c.ToCommentDTO()).ToList()
                 };
             }
 
@@ -32,8 +33,21 @@ namespace api.Mapper
                     Purchase = createStockRequestDTO.Purchase,
                     LastDiv = createStockRequestDTO.LastDiv,
                     Industry = createStockRequestDTO.Industry,
-                    MarketCap = createStockRequestDTO.MarketCap
+                    MarketCap = createStockRequestDTO.MarketCap,
                 };
             }
+
+                public static Stock ToStockFromUpdateDTO(this UpdateStockRequestDTO updateStockRequestDTO )
+                {
+                    return new Stock
+                    {
+                        Symbol = updateStockRequestDTO.Symbol,
+                        CompanyName = updateStockRequestDTO.CompanyName,
+                        Purchase = updateStockRequestDTO.Purchase,
+                        LastDiv = updateStockRequestDTO.LastDiv,
+                        Industry = updateStockRequestDTO.Industry,
+                        MarketCap = updateStockRequestDTO.MarketCap
+                    };
+                }
     }
 }

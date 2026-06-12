@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "cTTjGV90qgI=",
+  "dgSpecHash": "OBS/nkncSMk=",
   "success": true,
   "projectFilePath": "/Users/caotiendattx/Developer/dotnet/api/api.csproj",
   "expectedPackageFiles": [
     "/Users/caotiendattx/.nuget/packages/azure.core/1.47.1/azure.core.1.47.1.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/azure.identity/1.14.2/azure.identity.1.14.2.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/Users/caotiendattx/.nuget/packages/microsoft.aspnetcore.jsonpatch/8.0.0/microsoft.aspnetcore.jsonpatch.8.0.0.nupkg.sha512",
+    "/Users/caotiendattx/.nuget/packages/microsoft.aspnetcore.mvc.newtonsoftjson/8.0.0/microsoft.aspnetcore.mvc.newtonsoftjson.8.0.0.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/microsoft.aspnetcore.openapi/10.0.8/microsoft.aspnetcore.openapi.10.0.8.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/microsoft.bcl.asyncinterfaces/8.0.0/microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/microsoft.bcl.cryptography/9.0.4/microsoft.bcl.cryptography.9.0.4.nupkg.sha512",
@@ -41,6 +43,7 @@
     "/Users/caotiendattx/.nuget/packages/microsoft.visualstudio.solutionpersistence/1.0.52/microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/caotiendattx/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/swashbuckle.aspnetcore/10.2.1/swashbuckle.aspnetcore.10.2.1.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/swashbuckle.aspnetcore.swagger/10.2.1/swashbuckle.aspnetcore.swagger.10.2.1.nupkg.sha512",
     "/Users/caotiendattx/.nuget/packages/swashbuckle.aspnetcore.swaggergen/10.2.1/swashbuckle.aspnetcore.swaggergen.10.2.1.nupkg.sha512",

@@ -135,6 +135,7 @@ namespace api.Data
                     Title = "Great stock!",
                     Content = "This stock is performing very well.",
                     CreatedOn = new DateTime(2024, 1, 1, 10, 30, 0),
+                    Createby = new DateTime(2024, 1, 1, 10, 30, 0),
                     StockId = 1
                 },
                 new Comment
@@ -143,6 +144,7 @@ namespace api.Data
             Title = "Strong AI Business",
             Content = "Google is investing heavily in artificial intelligence.",
             CreatedOn = new DateTime(2024, 1, 2),
+            Createby = new DateTime(2024, 1, 1, 10, 30, 0),
             StockId = 2
         },
         new Comment
@@ -151,6 +153,7 @@ namespace api.Data
             Title = "Cloud Leader",
             Content = "Azure remains a major growth driver for Microsoft.",
             CreatedOn = new DateTime(2024, 1, 3),
+            Createby = new DateTime(2024, 1, 1, 10, 30, 0),
             StockId = 3
         },
         new Comment
@@ -159,6 +162,7 @@ namespace api.Data
             Title = "E-commerce Giant",
             Content = "Amazon dominates online retail worldwide.",
             CreatedOn = new DateTime(2024, 1, 4),
+            Createby = new DateTime(2024, 1, 1, 10, 30, 0),
             StockId = 4
         },
         new Comment
@@ -167,6 +171,7 @@ namespace api.Data
             Title = "Volatile Stock",
             Content = "Tesla stock remains highly volatile but promising.",
             CreatedOn = new DateTime(2024, 1, 5),
+            Createby = new DateTime(2024, 1, 1, 10, 30, 0),
             StockId = 5
         },
         new Comment
@@ -175,6 +180,7 @@ namespace api.Data
             Title = "Social Media Powerhouse",
             Content = "Meta's advertising business is recovering strongly.",
             CreatedOn = new DateTime(2024, 1, 6),
+            Createby = new DateTime(2024, 1, 1, 10, 30, 0),
             StockId = 6
         }
             );

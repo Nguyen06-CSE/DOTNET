@@ -17,16 +17,27 @@ namespace api.Mapper
                 Title = commentModel.Title,
                 Content = commentModel.Content,
                 CreatedOn = commentModel.CreatedOn,
+                Createby = commentModel.Createby,
                 StockId = commentModel.StockId
             };
         }
-
-        public static Comment ToCommentFromCreateDTO(this CreateCommentRequestDTO createCommentRequestDTO)
+        public static Comment ToCommentFromCreateDTO(this CreateCommentRequestDTO createCommentRequestDTO, int stockId)
         {
             return new Comment
             {
                 Title = createCommentRequestDTO.Title,
                 Content = createCommentRequestDTO.Content,
+                StockId = stockId
+            };
+        }
+
+        public static Comment ToCommentFromUpdateDTO(this UpdateCommentRequestDTO updateCommentRequestDTO, int stockId)
+        {
+            return new Comment
+            {
+                Title = updateCommentRequestDTO.Title,
+                Content = updateCommentRequestDTO.Content,
+                StockId = stockId
             };
         }
     }

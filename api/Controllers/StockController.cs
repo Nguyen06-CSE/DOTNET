@@ -61,5 +61,19 @@ namespace api.Controllers
             
             return NoContent();
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStockRequestDTO updateStockRequestDTO)
+        {
+            
+            var updatedStock = await _stocksRepository.UpdateStock(id, updateStockRequestDTO);
+            if (updatedStock == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updatedStock);
+        }
     }
 }

@@ -48,9 +48,9 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>     Create([FromBody] CreateCommentRequestDTO createCommentRequestDTO)
+        public async Task<IActionResult>Create([FromBody] CreateCommentRequestDTO createCommentRequestDTO, [FromQuery] int stockId)
         {
-            var comment = createCommentRequestDTO.ToCommentFromCreateDTO();
+            var comment = createCommentRequestDTO.ToCommentFromCreateDTO(stockId);
             await _commentsRepository.AddComment(comment);
             return CreatedAtAction(nameof(GetById), new { id = comment.Id }, comment);
         }
@@ -65,6 +65,18 @@ namespace api.Controllers
                 return NotFound();
             }
             return NoContent();
+        }
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDTO updateCommentRequestDTO)
+        {
+            var comment = updateCommentRequestDTO.ToCommentFromUpdateDTO(id);
+            var updatedComment = await _commentsRepository.UpdateComment(id, comment);
+            if (updatedComment == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedComment);
         }
     }
 }

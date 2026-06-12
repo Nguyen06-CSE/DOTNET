@@ -6,6 +6,7 @@ using api.Data;
 using api.Interface;
 using Microsoft.EntityFrameworkCore;
 using api.Models;
+using api.Dtos.Stock;
 
 namespace api.Repository
 {
@@ -17,15 +18,13 @@ namespace api.Repository
             _context = context;
         }
 
-        
-
         public async Task<List<Stock>> GetAllStocks()
         {
-            return await _context.Stocks.ToListAsync();
+            return await _context.Stocks.Include(s => s.Comments).ToListAsync();
         }
         public async Task<Stock> GetStockById(int id)
         {
-            return await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
+            return await _context.Stocks.Include(s => s.Comments).FirstOrDefaultAsync(s => s.Id == id);
         }
         public async Task<Stock> AddStock(Stock stock)
         {
@@ -44,5 +43,26 @@ namespace api.Repository
             await _context.SaveChangesAsync();
             return stock;
         }
+
+        public async Task<Stock?> UpdateStock(int id, UpdateStockRequestDTO stock)
+        {
+            var existingStock = await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
+            if (existingStock == null)
+            {
+                return null;
+            }
+            existingStock.Symbol = stock.Symbol;
+            existingStock.CompanyName = stock.CompanyName;
+            existingStock.Purchase = stock.Purchase;
+            existingStock.LastDiv = stock.LastDiv;
+            existingStock.Industry = stock.Industry;
+            existingStock.MarketCap = stock.MarketCap;
+
+            _context.Stocks.Update(existingStock);
+            await _context.SaveChangesAsync();
+            return existingStock;
+        }
+
+        
     }
 }

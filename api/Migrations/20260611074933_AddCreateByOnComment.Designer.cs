@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260611074933_AddCreateByOnComment")]
+    partial class AddCreateByOnComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,8 +61,8 @@ namespace api.Migrations
                         {
                             Id = 1,
                             Content = "This stock is performing very well.",
+                            Createby = new DateTime(2026, 6, 11, 14, 49, 33, 670, DateTimeKind.Local).AddTicks(1490),
                             CreatedOn = new DateTime(2024, 1, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
-                            Createby = new DateTime(2024, 1, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             StockId = 1,
                             Title = "Great stock!"
                         },
@@ -67,8 +70,8 @@ namespace api.Migrations
                         {
                             Id = 2,
                             Content = "Google is investing heavily in artificial intelligence.",
+                            Createby = new DateTime(2026, 6, 11, 14, 49, 33, 670, DateTimeKind.Local).AddTicks(2520),
                             CreatedOn = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Createby = new DateTime(2024, 1, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             StockId = 2,
                             Title = "Strong AI Business"
                         },
@@ -76,8 +79,8 @@ namespace api.Migrations
                         {
                             Id = 3,
                             Content = "Azure remains a major growth driver for Microsoft.",
+                            Createby = new DateTime(2026, 6, 11, 14, 49, 33, 670, DateTimeKind.Local).AddTicks(2530),
                             CreatedOn = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Createby = new DateTime(2024, 1, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             StockId = 3,
                             Title = "Cloud Leader"
                         },
@@ -85,8 +88,8 @@ namespace api.Migrations
                         {
                             Id = 4,
                             Content = "Amazon dominates online retail worldwide.",
+                            Createby = new DateTime(2026, 6, 11, 14, 49, 33, 670, DateTimeKind.Local).AddTicks(2540),
                             CreatedOn = new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Createby = new DateTime(2024, 1, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             StockId = 4,
                             Title = "E-commerce Giant"
                         },
@@ -94,8 +97,8 @@ namespace api.Migrations
                         {
                             Id = 5,
                             Content = "Tesla stock remains highly volatile but promising.",
+                            Createby = new DateTime(2026, 6, 11, 14, 49, 33, 670, DateTimeKind.Local).AddTicks(2540),
                             CreatedOn = new DateTime(2024, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Createby = new DateTime(2024, 1, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             StockId = 5,
                             Title = "Volatile Stock"
                         },
@@ -103,8 +106,8 @@ namespace api.Migrations
                         {
                             Id = 6,
                             Content = "Meta's advertising business is recovering strongly.",
+                            Createby = new DateTime(2026, 6, 11, 14, 49, 33, 670, DateTimeKind.Local).AddTicks(2540),
                             CreatedOn = new DateTime(2024, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Createby = new DateTime(2024, 1, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
                             StockId = 6,
                             Title = "Social Media Powerhouse"
                         });

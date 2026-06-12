@@ -12,5 +12,6 @@ namespace api.Interface
         Task<Comment> GetCommentById(int id);
         Task<Comment> AddComment(Comment comment);
         Task<Comment> DeleteComment(int id);
+        Task<Comment?> UpdateComment(int id, Comment comment);
     }
 }
