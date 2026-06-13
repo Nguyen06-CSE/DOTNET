@@ -8,6 +8,7 @@ using api.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using api.Interface;
+using api.Helps;
 namespace api.Controllers
 {
     [Route("api/[controller]")]
@@ -24,12 +25,15 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetALL()
-        {
-            var stocks = await _stocksRepository.GetAllStocks();
-            var stockDTOs = stocks.Select(s => s.ToStockDTO());
+        public async Task<IActionResult> GetALL([FromBody] StocksQueryObject queryObject)
+         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var stocks = await _stocksRepository.GetAllStocks(queryObject);
+            var stockDTOs = stocks.Select(s => s.ToStockDTO()).ToList();
             return Ok(stocks);
-        } 
+         }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -50,7 +54,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var stock = await _stocksRepository.DeleteStock(id);
@@ -63,7 +67,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStockRequestDTO updateStockRequestDTO)
         {
             

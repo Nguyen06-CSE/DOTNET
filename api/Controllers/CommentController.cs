@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Comment;
+using api.Helps;
 using api.Interface;
 using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
@@ -29,14 +30,16 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll ()
+        public async Task<IActionResult> GetAll ([FromQuery] CommentQueryObject queryObject)
         {
-            var comments = await _commentsRepository.GetAllComments();
-            var commentDTOs = comments.Select(c => c.ToCommentDTO());
-            return Ok(comments);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var comments = await _commentsRepository.GetAllComments(queryObject);
+            var commentDTOs = comments.Select(c => c.ToCommentDTO()).ToList();
+            return Ok(commentDTOs);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var comment = await _commentsRepository.GetCommentById(id);
@@ -56,7 +59,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var comment = await _commentsRepository.DeleteComment(id);
@@ -67,7 +70,7 @@ namespace api.Controllers
             return NoContent();
         }
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDTO updateCommentRequestDTO)
         {
             var comment = updateCommentRequestDTO.ToCommentFromUpdateDTO(id);
